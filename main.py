@@ -10,13 +10,17 @@ def main():
         print("Usage:\nmain.py 'username' [number]")
         sys.exit()
 
+    keynumber = 0
+    if len(sys.argv) == 3:
+        keynumber = int(sys.argv[2])
+
     username = sys.argv[1]
     url = 'https://api.github.com/users/{}/keys'.format(username)
 
     github = urllib.request.urlopen(url)
     data = github.read()
     jsonobj = json.loads(data.decode('utf-8'))
-    key = jsonobj[0]['key']
+    key = jsonobj[keynumber]['key']
     
     p = '{}/.ssh/'.format(Path.home())
     if not os.path.exists(p):
