@@ -17,11 +17,12 @@ def main():
     data = github.read()
     jsonobj = json.loads(data.decode('utf-8'))
     key = jsonobj[0]['key']
+    
+    p = '{}/.ssh/'.format(Path.home())
+    if not os.path.exists(p):
+        os.makedirs(p)
 
-    if not os.path.exists('~/.ssh/'):
-        os.makedirs('~/.ssh/')
-
-    f = open('{}/.ssh/github_authorized'.format(Path.home()), 'w')
+    f = open(p + 'github_authorized', 'w')
     f.write(key)
     print("Writing key: {}".format(key))
     f.close()
